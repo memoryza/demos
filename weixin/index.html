@@ -1,0 +1,288 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Expires" content="-1">
+		<title>demo</title>
+		<script>
+			var phoneWidth =  parseInt(window.screen.width);
+			var phoneScale = phoneWidth/640;
+			var ua = navigator.userAgent;
+			if (/Android (\d+\.\d+)/.test(ua)){
+				var version = parseFloat(RegExp.$1);
+				if(version>2.3){
+					document.write('<meta name="viewport" content="width=640, minimum-scale = '+phoneScale+', maximum-scale = '+phoneScale+', target-densitydpi=device-dpi">');
+				}else{
+					document.write('<meta name="viewport" content="width=640, target-densitydpi=device-dpi">');
+				}
+			} else {
+				document.write('<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">');
+			}
+		</script>
+		<style>
+			.content,body{
+				width:640px;
+				overflow: hidden;
+				margin:0 auto;
+				position: relative;
+			}
+			.indexTip {
+				width:100%;
+				height: 100%;
+				position: absolute;
+				float: left;
+				z-index: 2;
+				background: url(/images/weixin/first.png) no-repeat center;
+				background-size:cover;
+			}
+			section {
+				height: 100%;
+				width: 100%;
+				position: absolute;
+			}
+			div.img1 {
+				height: 100%;
+				background: url(it1.jpg) no-repeat center;
+				background-size:cover;
+			}
+			div.img2 {
+				height: 100%;
+				background: url(it2.jpg) no-repeat center;
+				background-size:cover;
+			}
+			div.img3 {
+				height: 100%;
+				background: url(it3.jpg) no-repeat center;
+				background-size:cover;
+			}
+			div.img4 {
+				height: 100%;
+				background: url(it4.jpg) no-repeat center;
+				background-size:cover;
+			}
+			div.img5 {
+				height: 100%;
+				background: url(it5.jpg) no-repeat center;
+				background-size:cover;
+			}
+			div.img6 {
+				height: 100%;
+				background: url(form.jpg) no-repeat center;
+				background-size:cover;
+			}
+/*报名*/
+.form{width:400px;margin:0 auto;padding-top:45%;}
+.form h1,.notice,.label,.sub{font-family:"Microsoft YaHei", "微软雅黑",'Helvetica Neue',Helvetica,Arial;}
+.form h1{font-size:54px;color:#fff;text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);text-align:center;margin:0;}
+.notice{color:#fff;text-align:center;margin:0 0 20px 0;font-weight:400;font-size:16px;}
+.input{text-align:center;}
+.input label{width:140px;}
+.input form{margin-bottom:10px;}
+.label{width:70px;padding-right:10px;text-align:right;color:#fff;font-weight:800;font-size:20px;}
+.input-text{height:40px;line-height:30px;border:1px solid #fff;margin:4px 0;width:240px;opacity:0.7;
+padding-left:5px;font-size:16px;-ms-filter: "alpha(opacity=70)"; /* IE 8 */filter: alpha(opacity=70);/* IE 4-7 */zoom: 1}
+.btn{width:128px;height:50px;font-size:18px;font-weight:800;border-radius:8px;
+box-shadow: 0 1px 0 rgba(255,255,255,.5) inset,0 1px 0 rgba(0,0,0,.2);cursor:pointer;}
+.sub{background:#8ab923;margin-top:28px;
+background-image: -moz-linear-gradient(top,#adda4d,#86b846);
+background-image: -ms-linear-gradient(top,#adda4d,#86b846);
+background-image: -webkit-gradient(linear,0 0,0 100%,from(#adda4d),to(#86b846));
+background-image: -webkit-linear-gradient(top,#adda4d,#86b846);
+background-image: -o-linear-gradient(top,#adda4d,#86b846);
+background-image: linear-gradient(top,#adda4d,#86b846);
+background-repeat: repeat-x;
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#adda4d', endColorstr='#86b846', GradientType=0);
+text-shadow: 0 1px 0 rgba(255,255,255,.3);
+border: 1px solid #6d8f29;
+color: #3e5e00!important;}
+.share{background: #65b2fb;
+background-image: -moz-linear-gradient(top,#65b2fb,#3492e9);
+background-image: -ms-linear-gradient(top,#65b2fb,#3492e9);
+background-image: -webkit-gradient(linear,0 0,0 100%,from(#65b2fb),to(#3492e9));
+background-image: -webkit-linear-gradient(top,#65b2fb,#3492e9);
+background-image: -o-linear-gradient(top,#65b2fb,#3492e9);
+background-image: linear-gradient(top,#65b2fb,#3492e9);
+background-repeat: repeat-x;
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#65b2fb', endColorstr='#3492e9', GradientType=0);
+text-shadow: 0 1px 0 rgba(255,255,255,.3);
+border:1px solid;
+border-color:#318ce4 #2b82db #2878c7;
+color: #30416E!important;}
+		</style>
+	</head>
+	<body>
+		<!-- <div class="indexTip"></div> -->
+		<div class="content">		
+			<section class="_pager">
+				<div class="img1" >
+				</div>
+			</section>
+			<section class="_pager">
+				<div class="img2">
+				</div>
+			</section>
+			<section class="_pager">
+				<div class="img3">
+				</div>
+			</section>
+			<section class="_pager">
+				<div class="img4">
+				</div>
+			</section>
+			<section class="_pager">
+				<div class="img5">
+				</div>
+			</section>
+			<section class="_pager">
+				 <div class="img6">
+				 	<div class="form">
+				 		<h1>我要报名</h1>
+				 		<p class="notice">（我们主动联系您！）</p>
+				 		<div class="input">
+				 			<form action="" method="post">
+					 		<table>
+					 			<tr>
+					 				<td class="label">姓名</td>
+					 				<td><input class="input-text" id="name" placeholder="请输入姓名"/></td>
+					 			</tr>
+					 			<tr>
+					 				<td class="label">电话</td>
+					 				<td><input class="input-text" id="mobile" placeholder="请输入手机号"/></td>
+					 			</tr>
+					 			<tr>
+					 				<td class="label">所在地</td>
+					 				<td><input class="input-text" id="address" placeholder="请输入地址"/></td>
+					 			</tr>
+					 		</table>
+					 		<input class="sub btn" type="submit" value="提交">
+					 		</form>
+					 		<button class="share btn">分享</button>
+				 		</div>
+				 	</div>
+				 	<div id="messageTip"></div>
+				 </div>
+			</section>
+		</div>
+		<script src="jquery2.min.js"></script>
+		<script>
+			$(function() {
+				var viewHeight  = window.innerHeight,
+					currentPage = 0,
+					animateTime = 1000,
+					$box = $('.content'),
+					totalPage = $box.find('._pager').length,
+					mem = {
+						init: function() {
+							$('body, ._pager, .content,.indexTip').css('height', viewHeight);
+							$('._pager').each(function(index) {
+								$(this).css('top', index * viewHeight);
+							})
+							mem.initPlaceHolder();
+						},
+						swap: function(e) {
+							var touch = e.originalEvent,
+					            startY = touch.changedTouches[0].pageY,
+					            $this = $(this);
+					        $this.one('touchend', function(ev) {
+					            var touch = ev.originalEvent,
+					                endY = touch.changedTouches[0].pageY;
+					             //下滑
+					            if((endY - startY) > 10) {
+					            	mem.swapAnimate(0)
+					            } else if((endY - startY) < -10) {
+					            //上滑
+									mem.swapAnimate(1)				               
+					            }
+					        });
+					        $this.off('touchmove').on('touchmove', function(em) {
+					        	
+					        });
+						},
+						getIndex: function(direction) {
+							return  (direction + currentPage + totalPage) % totalPage;
+						},
+						swapAnimate: function(direction) {
+							var scrollTop = direction ? -viewHeight : viewHeight;
+							$box.find('._pager:eq(' + mem.getIndex(direction ? 1 : -1) + ')').css({'z-index': 10}).stop()
+                   			.animate({top: 0}, animateTime, function() {
+                   				$box.find('._pager:eq(' + currentPage + ')').stop().css({top: scrollTop, 'z-index': 9});              
+	                            for(var x = 1; x < totalPage; x++) {
+	                                $box.find('._pager:eq(' + mem.getIndex(direction ? x : -x) + ')').css({
+	                                    top: (direction ? viewHeight  : -viewHeight) * (x - 1)
+	                                }).css({'z-index': 9});
+	                            }	                            
+	                            currentPage = mem.getIndex(direction ? 1 : -1);                                                  
+                   			});           
+						},
+						//首页点击确认
+						clickBtn: function() {
+							$(this).hide();
+						},
+						//报名
+						submit: function() {
+							var name = $.trim($('#name').val()),
+								phone = $.trim($('#mobile').val()),
+								address = $.trim($('#emailaddress').val());
+							if(!name || !phone || !address) {
+								mem.messageTip('请完善您的个人信息');
+								return false;
+							}
+							if(address && address.match(/^(?:[a-zA-Z\d]+[_\-\+\.]?)*[a-zA-Z\d]+@(?:([a-zA-Z\d]+\-?)*[a-zA-Z\d]+\.)+([a-zA-Z]{2,})+$/)) {
+								mem.messageTip('您的邮箱地址不正确哦');
+								return false;
+							}
+							if(!phone.match(/^((13[0-9])|(15[0-9])|(18[0-9]))\d{8}$/)) {
+								mem.messageTip('这个号码可打不通哦');
+								return false;
+							}
+
+							$.post('/activity/submit', {name: name, phone: phone, address: address}, function(data) {
+								if(data.errcode == 0) {
+									mem.messageTip('您已报名成功，客服会尽快和您取得联系', 5000);
+								} else {
+									mem.messageTip(data.msg);
+								}
+							}, 'json');
+						},
+						messageTip: function(msg, time) {
+							var time = time || 3000;
+							$('#messageTip').text(msg).show();
+							setTimeout(function() {
+								$('#messageTip').hide();
+							}, time);
+						},
+						initPlaceHolder: function() {				          
+				            $('input[placeholder], textarea[placeholder]').each(function() {
+			                    $(this).data({'placeholder': $(this).attr('placeholder')}).on('click', function() {
+			                        if(!$(this).val() || $(this).val() == $(this).data('placeholder')) {
+			                            if($.browser && $.browser.msie && parseInt($.browser.version) <= 9) {
+			                                $(this).val('');
+			                            } else {
+			                                $(this).attr('placeholder', '');
+			                            }
+			                        }
+			                    }).on('blur', function() {
+			                        if(!$(this).val() || $(this).val() == $(this).data('placeholder')) {
+			                            if($.browser && $.browser.msie && parseInt($.browser.version) <= 9) {
+			                                $(this).val($(this).data('placeholder'));
+			                            } else {
+			                                $(this).attr('placeholder', $(this).data('placeholder'));
+			                            }
+			                        }
+			                    });
+				            });
+				        }
+					};
+				
+				mem.init();
+				$(document)
+					.on('touchstart', '._pager', mem.swap)
+					.on('touchstart', '.indexTip', mem.clickBtn)
+					.on('click', '#submit', mem.submit);
+			})
+		</script>		
+	</body>
+</html>
