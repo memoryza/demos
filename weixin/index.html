@@ -136,35 +136,7 @@ color: #30416E!important;}
 				<div class="img5">
 				</div>
 			</section>
-			<section class="_pager">
-				 <div class="img6">
-				 	<div class="form">
-				 		<h1>我要报名</h1>
-				 		<p class="notice">（我们主动联系您！）</p>
-				 		<div class="input">
-				 			<form action="" method="post">
-					 		<table>
-					 			<tr>
-					 				<td class="label">姓名</td>
-					 				<td><input class="input-text" id="name" placeholder="请输入姓名"/></td>
-					 			</tr>
-					 			<tr>
-					 				<td class="label">电话</td>
-					 				<td><input class="input-text" id="mobile" placeholder="请输入手机号"/></td>
-					 			</tr>
-					 			<tr>
-					 				<td class="label">所在地</td>
-					 				<td><input class="input-text" id="address" placeholder="请输入地址"/></td>
-					 			</tr>
-					 		</table>
-					 		<input class="sub btn" type="submit" value="提交">
-					 		</form>
-					 		<button class="share btn">分享</button>
-				 		</div>
-				 	</div>
-				 	<div id="messageTip"></div>
-				 </div>
-			</section>
+	
 		</div>
 		<script src="jquery2.min.js"></script>
 		<script>
@@ -184,23 +156,45 @@ color: #30416E!important;}
 						},
 						swap: function(e) {
 							var touch = e.originalEvent,
-					            startY = touch.changedTouches[0].pageY,
-					            $this = $(this);
-					        $this.one('touchend', function(ev) {
-					            var touch = ev.originalEvent,
-					                endY = touch.changedTouches[0].pageY;
-					             //下滑
-					            if((endY - startY) > 10) {
-					            	mem.swapAnimate(0)
-					            } else if((endY - startY) < -10) {
-					            //上滑
-									mem.swapAnimate(1)				               
-					            }
-					        });
-					        $this.off('touchmove').on('touchmove', function(em) {
-					        	
-					        });
-						},
+						            startY = touch.changedTouches[0].pageY,
+						            $this = $(this);
+						        var isAction = 0;
+						        $this.one('touchend', function(ev) {
+						        	if(!isAction) {
+						        		var touch = ev.originalEvent,
+						                endY = touch.changedTouches[0].pageY;
+							             //下滑
+							            if((endY - startY) > 50) {
+							            	isAction = 1;
+							            	tuxing.swapAnimate(0)
+							            } else if((endY - startY) < -50) {
+								            //上滑
+								            isAction = 1;
+											tuxing.swapAnimate(1)				               
+							            }	
+						        	}
+					        		
+						        });
+						        var timerId = 0;
+						        $this.one('touchmove', function(em) {				        	
+						        	if(!isAction) {
+						        		window.clearInterval(timerId);  
+		    							timerId = window.setTimeout(function() {
+		    								var touch = em.originalEvent,
+						               		endY = touch.changedTouches[0].pageY;
+								             //下滑
+								            if((endY - startY) > 40) {
+								            	isAction = 1;
+								            	tuxing.swapAnimate(0)
+								            } else if((endY - startY) < -40) {
+									            //上滑
+									            isAction = 1;
+												tuxing.swapAnimate(1)				               
+								            }	
+		    							}, 200);  				        		
+						        	}
+						        });
+							},
 						getIndex: function(direction) {
 							return  (direction + currentPage + totalPage) % totalPage;
 						},
@@ -221,67 +215,21 @@ color: #30416E!important;}
 						clickBtn: function() {
 							$(this).hide();
 						},
-						//报名
-						submit: function() {
-							var name = $.trim($('#name').val()),
-								phone = $.trim($('#mobile').val()),
-								address = $.trim($('#emailaddress').val());
-							if(!name || !phone || !address) {
-								mem.messageTip('请完善您的个人信息');
-								return false;
-							}
-							if(address && address.match(/^(?:[a-zA-Z\d]+[_\-\+\.]?)*[a-zA-Z\d]+@(?:([a-zA-Z\d]+\-?)*[a-zA-Z\d]+\.)+([a-zA-Z]{2,})+$/)) {
-								mem.messageTip('您的邮箱地址不正确哦');
-								return false;
-							}
-							if(!phone.match(/^((13[0-9])|(15[0-9])|(18[0-9]))\d{8}$/)) {
-								mem.messageTip('这个号码可打不通哦');
-								return false;
-							}
-
-							$.post('/activity/submit', {name: name, phone: phone, address: address}, function(data) {
-								if(data.errcode == 0) {
-									mem.messageTip('您已报名成功，客服会尽快和您取得联系', 5000);
-								} else {
-									mem.messageTip(data.msg);
-								}
-							}, 'json');
-						},
+	
 						messageTip: function(msg, time) {
 							var time = time || 3000;
 							$('#messageTip').text(msg).show();
 							setTimeout(function() {
 								$('#messageTip').hide();
 							}, time);
-						},
-						initPlaceHolder: function() {				          
-				            $('input[placeholder], textarea[placeholder]').each(function() {
-			                    $(this).data({'placeholder': $(this).attr('placeholder')}).on('click', function() {
-			                        if(!$(this).val() || $(this).val() == $(this).data('placeholder')) {
-			                            if($.browser && $.browser.msie && parseInt($.browser.version) <= 9) {
-			                                $(this).val('');
-			                            } else {
-			                                $(this).attr('placeholder', '');
-			                            }
-			                        }
-			                    }).on('blur', function() {
-			                        if(!$(this).val() || $(this).val() == $(this).data('placeholder')) {
-			                            if($.browser && $.browser.msie && parseInt($.browser.version) <= 9) {
-			                                $(this).val($(this).data('placeholder'));
-			                            } else {
-			                                $(this).attr('placeholder', $(this).data('placeholder'));
-			                            }
-			                        }
-			                    });
-				            });
-				        }
+						}
+					
 					};
 				
 				mem.init();
 				$(document)
 					.on('touchstart', '._pager', mem.swap)
 					.on('touchstart', '.indexTip', mem.clickBtn)
-					.on('click', '#submit', mem.submit);
 			})
 		</script>		
 	</body>
