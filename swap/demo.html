@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+    <head>
+        <title>划屏</title>
+        <meta charset="utf-8">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-touch-fullscreen" content="yes">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no,width=device-width">
+    	<style>
+    		body, ul,li{margin: 0; padding: 0;}
+    		body{
+    			height: 100%;
+    			background-color: #ccc;
+    		}
+    		#container {
+				height: 568px;
+				width: 320px;
+				display: block;
+				overflow: hidden;
+    		}
+    		ul{overflow: hidden;width: 100%;}
+    		ul li{
+    			list-style: none;
+    			position: absolute;
+    		}
+    	</style>
+    </head>
+    <body>
+    	<div id="container">
+
+    	</div>
+    </body>
+    <script>
+    	var list = [{
+    		width: 400,
+    		height:500,
+    		src:'img/1.jpg'
+    	},{
+    		width: 400,
+    		height:500,
+    		src:'img/2.jpg'
+    	},{
+    		width: 400,
+    		height:500,
+    		src:'img/3.jpg'
+    	},{
+    		width: 400,
+    		height:500,
+    		src:'img/4.jpg'
+    	}];
+    	function imageSwap(s) {
+    		this.container = document.getElementById(s.container);
+    		this.timer = s.timer || 3000;
+    		this.callback = s.callback || function(){};
+    		this.list = s.list;
+    		this.renderUI();
+    		this.bindEvent();
+    	}
+    	imageSwap.prototype.renderUI = function() {
+    		var self = this;
+    		var html = '';
+    		var styleStr = '';
+
+    		self.indexId = 0;
+    		html += '<ul>';
+    		for(var i = 0, _len = self.list.length; i < _len; i++) {
+    			styleStr = 'height:' + window.innerHeight + 'px;-webkit-transform:translate3d(' + i * window.innerWidth + 'px, 0, 0);';
+    			html += '<li style="' + styleStr + '"><img src="' + this.list[i].src + '"/></li>';
+    		}
+    		html += '</ul>';
+    		self.container.innerHTML = html;
+    	}
+    	imageSwap.prototype.bindEvent = function() {
+    		var self = this;
+    		self.startTime = 0;
+			var startHandler =  function(ev) {
+				self.startX = ev.touches[0].pageX;
+				self.startTime = new Date() * 1;
+				self.moveOffsetx = 0;
+			}
+			var moveHandler = function(ev) {
+				var changeS = self.indexId - 1;
+				var changeE = self.indexId + 2;
+				self.moveOffsetx = ev.touches[0].pageX - self.startX;
+
+				for(;changeS < changeE;  changeS++) {
+				}
+				ev.preventDefault();
+			}
+			var endHandler = function(ev) {
+				var boundary = self.innerWidth / 6;
+				var endTime = new Date() * 1;
+				if(endTime - self.startTime > 800) {
+					if(self.moveOffsetx >= boundary) {
+						//上一张
+						self.go(-1);
+					} else if(self.moveOffsetx <= -boundary) {
+						//下一张
+						self.go(1);
+					} else if(self.moveOffsetx >= -20 &&  self.moveOffsetx <= 20) {
+						//点击事件
+						self.go(0);
+					} else {
+						//不动
+						self.go(0);
+					}
+				} else {
+					if(self.moveOffsetx >= 50) {
+						//上一张
+						self.go(-1);
+					} else if(self.moveOffsetx <= -50) {
+						//下一张
+						self.go(1);
+					} else if(self.moveOffsetx >= -20 &&  self.moveOffsetx <= 20 && (endTime - self.startTime > 200)) {
+						//点击事件
+						self.go(0);
+					} else {
+						//不动
+						self.go(0);
+					}
+				}				
+				ev.preventDefault();	
+			}
+			self.container.addEventListener('touchstart', startHandler);
+			self.container.addEventListener('touchmove', moveHandler);
+			self.container.addEventListener('touchend', endHandler)
+    	}	
+    	imageSwap.prototype.getIndexId = function() {
+			this.indexId =  this.indexId % this.list.length;
+		}
+    	imageSwap.prototype.go = function(flag) {
+    		var self = this;
+			self.indexId = self.indexId + flag;
+			self.getIndexId();
+			var changeS = self.indexId - 1;
+			var changeE = self.indexId + 2;
+			for(;changeS < changeE;  changeS++) {
+				 
+			}
+			self.callback();
+    	}
+    	new imageSwap({
+    		container: 'container',
+    		timer: 3000,
+    		list:list
+    	});
+    </script>
+</html>
