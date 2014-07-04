@@ -62,70 +62,73 @@
 			self.moveOffsetx = 0; 
 		}
 		var moveHandler = function(ev) {
-			var moveX = ev.touches[0].pageX;
-			var moveY = ev.touches[0].pageY;
-			var changeS = self.indexId - 1;
-			var changeE = self.indexId + 2;
-			self.moveOffsetx = moveX - self.startX;
-			if(Math.abs(moveY - self.startY) > Math.abs(self.moveOffsetx)) {
-				return;
-			}
-			for(;changeS < changeE;  changeS++) {
-				for(var i = 0, _len = self.browserKit.length; i < _len; i++) {
-					$(self.container).find('li').get(changeS%self.scrollLen) && $($(self.container).find('li').get(changeS%self.scrollLen)).css(self.browserKit[i] + 'transform', 'translate3d(' + ((changeS - self.indexId)* self.innerWidth + self.moveOffsetx) + 'px, 0 ,0)');
+			if(!self.locked) {
+				var moveX = ev.touches[0].pageX;
+				var moveY = ev.touches[0].pageY;
+				var changeS = self.indexId - 1;
+				var changeE = self.indexId + 2;
+				self.moveOffsetx = moveX - self.startX;
+				if(Math.abs(moveY - self.startY) > Math.abs(self.moveOffsetx)) {
+					return;
 				}
-			}					
+				for(;changeS < changeE;  changeS++) {
+					for(var i = 0, _len = self.browserKit.length; i < _len; i++) {
+						$(self.container).find('li').get(changeS%self.scrollLen) && $($(self.container).find('li').get(changeS%self.scrollLen)).css(self.browserKit[i] + 'transform', 'translate3d(' + ((changeS - self.indexId)* self.innerWidth + self.moveOffsetx) + 'px, 0 ,0)');
+					}
+				}
+			}
 			ev.preventDefault();
 		}
 		var endHandler = function(ev) {
-
-			var boundary = self.innerWidth / 6;
-			var endTime = new Date() * 1;
-			var endY = ev.changedTouches[0].pageY;
-			var endX = ev.changedTouches[0].pageX;
-			if(Math.abs(endY - self.startY) > Math.abs(endX - self.startX)) {
-				return;
-			}			
-			if(endTime - self.startTime > 800) {
-				if(self.moveOffsetx >= boundary) {
-					//上一张
-					self.go(-1);
-				} else if(self.moveOffsetx <= -boundary) {
-					//下一张
-					self.go(1);
-				} else if(self.moveOffsetx >= -20 &&  self.moveOffsetx <= 20) {	
-					var href = $($(self.container).find('li').get(self.indexId)).attr('href');
-					if(href) {
-						location.href = href;
+			if(!self.locked) {
+				var boundary = self.innerWidth / 6;
+				var endTime = new Date() * 1;
+				var endY = ev.changedTouches[0].pageY;
+				var endX = ev.changedTouches[0].pageX;
+				if(Math.abs(endY - self.startY) > Math.abs(endX - self.startX)) {
+					return;
+				}			
+				if(endTime - self.startTime > 800) {
+					if(self.moveOffsetx >= boundary) {
+						//上一张
+						self.go(-1);
+					} else if(self.moveOffsetx <= -boundary) {
+						//下一张
+						self.go(1);
+					} else if(self.moveOffsetx >= -20 &&  self.moveOffsetx <= 20) {	
+						var href = $($(self.container).find('li').get(self.indexId)).attr('href');
+						if(href) {
+							location.href = href;
+						}
+						self.go(0);
+					} else {					
+						self.go(0);
 					}
-					self.go(0);
-				} else {					
-					self.go(0);
-				}
-			} else {
-				if(self.moveOffsetx >= 50) {
-					//上一张
-					self.go(-1);
-				} else if(self.moveOffsetx <= -50) {
-					//下一张
-					self.go(1);
-				} else if(self.moveOffsetx >= -20 &&  self.moveOffsetx <= 20 && (endTime - self.startTime > 100)) {
-					var href = $($(self.container).find('li').get(self.indexId)).attr('href');
-					if(href) {
-						location.href = href;
-					}
-					self.go(0);
 				} else {
-					//不动					
-					self.go(0);
+					if(self.moveOffsetx >= 50) {
+						//上一张
+						self.go(-1);
+					} else if(self.moveOffsetx <= -50) {
+						//下一张
+						self.go(1);
+					} else if(self.moveOffsetx >= -20 &&  self.moveOffsetx <= 20 && (endTime - self.startTime > 100)) {
+						var href = $($(self.container).find('li').get(self.indexId)).attr('href');
+						if(href) {
+							location.href = href;
+						}
+						self.go(0);
+					} else {
+						//不动					
+						self.go(0);
+					}
+				}
+				if(self.timerTick) {
+					clearTimeout(self.timerTick);
+					delete self.timerTick;
+					//定时器
+					self.timerTicket();
 				}
 			}
-			if(self.timerTick) {
-				clearTimeout(self.timerTick);
-				delete self.timerTick;
-				//定时器
-				self.timerTicket();
-			}		
 			ev.preventDefault();	
 		}
 		
