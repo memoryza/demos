@@ -20,6 +20,7 @@
 		this.browserKit = ['-moz-', '', '-webkit-'];
 		this.init();		
 		this.bindEvent();
+		this.locked = 0;//运动时枷锁
 	}
 	fadePlugin.prototype.init = function() {
 		var self = this;
@@ -71,7 +72,7 @@
 			}
 			for(;changeS < changeE;  changeS++) {
 				for(var i = 0, _len = self.browserKit.length; i < _len; i++) {
-					$(self.container).find('li').get(changeS) && $($(self.container).find('li').get(changeS)).css(self.browserKit[i] + 'transform', 'translate3d(' + ((changeS - self.indexId)* self.innerWidth + self.moveOffsetx) + 'px, 0 ,0)');
+					$(self.container).find('li').get(changeS%self.scrollLen) && $($(self.container).find('li').get(changeS%self.scrollLen)).css(self.browserKit[i] + 'transform', 'translate3d(' + ((changeS - self.indexId)* self.innerWidth + self.moveOffsetx) + 'px, 0 ,0)');
 				}
 			}					
 			ev.preventDefault();
@@ -144,8 +145,39 @@
 		// clearTimeout(this.timerTick);
 		typeof callback == 'function' ? callback() : '';
 	}
+	fadePlugin.prototype.animate = function(index, direction) {
+		var self = this;
+		var indexId = index + direction;
+		indexId =  (indexId + this.scrollLen)%this.scrollLen;
+		var prevDom = $('#fadeContainer .mainimg_list').get(index);
+		var currentDom =  $('#fadeContainer .mainimg_list').get(indexId);
+		self.locked = 1;		
+		switch(direction) {
+			case -1:		
+				$(prevDom).animate({'-webkit-transform':'translate3d(0px, 0 ,0)', 'transform': 'translate3d(0px, 0 ,0)'}, 500, function(){
+					self.locked = 0;
+				});
+				$(currentDom).animate({'-webkit-transform':'translate3d(' + this.innerWidth + 'px, 0 ,0)', 'transform':'translate3d(' + this.innerWidth + 'px, 0 ,0)'}, 500, function(){
+					self.locked = 0;
+				});
+				break;
+			case 1:
+				$(prevDom).animate({'-webkit-transform':'translate3d(' + (-this.innerWidth) + 'px, 0 ,0)','transform':'translate3d(' + (-this.innerWidth) + 'px, 0 ,0)'}, 500, function(){
+					self.locked = 0;
+				});
+				$(currentDom).animate({'-webkit-transform':'translate3d(0px, 0 ,0)', 'transform': 'translate3d(0px, 0 ,0)'}, 500, function(){
+					self.locked = 0;
+				});
+				break;
+			default:
+				$(currentDom).animate({'-webkit-transform':'translate3d(0px, 0 ,0)', 'transform': 'translate3d(0px, 0 ,0)'}, 500, function(){
+					self.locked = 0;
+				});
+		}
+	}
 	fadePlugin.prototype.go = function(flag) {
 		var self = this;
+		self.animate(self.indexId, flag);
 		self.indexId = self.indexId + flag;
 		self.getIndexId();
 		var changeS = self.indexId - 1;
@@ -155,5 +187,10 @@
 				$(self.container).find('li').get(changeS) && $($(self.container).find('li').get(changeS)).css(self.browserKit[i] + 'transform', 'translate3d(' + (changeS - self.indexId)* self.innerWidth + 'px, 0 ,0)');
 			}
 		}
+		//最后一次动画的时候把第一个移动到后边
+		if(self.indexId == this.scrollLen - 1) {
+			$($(self.container).find('li').get(0)).css({'-webkit-transform':'translate3d(320px, 0 ,0)', 'transform': 'translate3d(320px, 0 ,0)'});
+		}
+
 		typeof self.callback == 'function' ? self.callback(self.indexId) : '';
 	}
