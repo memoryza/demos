@@ -1,0 +1,36 @@
+<title>dialog测试</title>
+<link href="css/bootstrap/bootstrap.css" rel="stylesheet"/>
+<link href="css/dialog.css" rel="stylesheet"/>
+<a class="_clickNormal">普通弹框<a>
+<a class="_clickPrompt">询问框<a>
+<a class="_clickConfirm">确认框<a>
+<a class="_clickInline">内敛框</a>
+<a class="_clickMask">含遮罩的框</a>
+
+<script src="js/seajs/sea.js"></script>
+<script>
+/**
+	* 站点配置文件
+	* author:memoryza(jincai.wang@foxmail.com)
+	**/
+	seajs.config({
+		base: './',
+		// 别名配置
+		alias: {
+			'jquery': 'js/jquery/jquery.1.11',
+			'Widget': 'js/modules/Widget',
+			'Dialog': 'js/modules/Dialog',
+			'bootstrap': 'js/bootstrap/bootstrap.min'
+		},
+		vars: {
+		'locale': 'zh-cn'
+		},
+		preload: [
+			'jquery',
+			'Dialog'
+		],
+		// 文件编码
+		charset: 'utf-8'
+	});
+	seajs.use('js/index.js')
+</script>
