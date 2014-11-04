@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+    <head>
+        <title>test</title>
+        <meta charset="utf-8">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-touch-fullscreen" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <link rel="shortcut icon" sizes="144x144" href="/images/icon.png">
+        <link rel="apple-touch-icon" href="/images/icon.png">
+        <meta property="wb:webmaster" content="memoryza">
+        <meta name="author" content="memoryza">
+        <meta name="tel" content="18876858035">
+        <meta name="email" content="jincai.wang@foxmail.com">
+        <meta name="copyright" content="Copyright@memoryza">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no,width=device-width">
+        <!-- 忽略页面中的数字识别为电话号码,email识别 -->
+        <meta name="format-detection" content="telphone=no, email=no" />
+        <!-- uc强制竖屏 -->
+        <meta name="screen-orientation" content="portrait">
+        <!-- QQ强制竖屏 -->
+        <meta name="x5-orientation" content="portrait">
+        <!-- 去掉地址栏 -->
+        <!-- UC应用模式 -->
+        <meta name="browsermode" content="application">
+
+        <!-- QQ应用模式 -->
+        <meta name="x5-page-mode" content="app">
+        <meta http-equiv="Expires" CONTENT="0">
+        <meta http-equiv="Cache-Control" CONTENT="no-cache">
+        <meta http-equiv="Pragma" CONTENT="no-cache">
+    </head>
+    <body>
+
+		<div style="height:2000px">scroll test
+			<p id="test">
+				测试文本串如下:
+			</p>
+		</div>
+		<div id="container">
+			<p>append dom</p>
+		</div>
+		<script type="text/javascript" src="/js/z.min.js"></script>   
+
+		<script type="text/javascript">
+			$(function () {
+				var winHeight = $(window).height();
+				var doc = document;
+				var isLocked = false;
+				var i = 0;
+				$(window).on('scroll', function() {
+					console.log(winHeight ,$(window).scrollTop(),winHeight + $(window).scrollTop(), $(doc).height())
+					if( winHeight + $(window).scrollTop() > $(doc).height() - 40) {
+						$('#test').append('当前高度', $(doc).height());
+						if(!isLocked) {
+							isLocked = true;
+							setTimeout(function() {
+								isLocked = false;
+								$('#container').append('<p>我是文本' + (++i)　+'</p>');
+							}, 2000)
+						}
+						
+						
+					}
+					
+				})
+			})
+		</script>
+	</body>
+</html>
