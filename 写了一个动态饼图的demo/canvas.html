@@ -1,0 +1,42 @@
+<canvas id="test"></canvas>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="canvas.js"></script>
+<script type="text/javascript">
+    var canvas = new pieChart({
+        id: 'test',
+        width:  362,
+        height: 288,
+        bgcolor: '#f9fafe',
+        title: {
+            text: '今日资金流向',
+            subtext: '(净流入123亿)',
+            x: 20,
+            y: 30
+        },
+        unit: {
+            names: ['元', '万元', '亿元'],
+            scales: [1, 10000, 100000000]
+        },
+        outercircle:{
+            radius: 62,
+            color: '#cccccc'
+        },
+        innercircle: {
+            radius: 22,
+            opacity: 0.4,
+            name: '今日资金',
+        },
+        series:{
+            radius: 60,//饼图半径
+            decimal: 0,
+            data: [
+                {name: '主力流入', value: 176780000},
+                {name: '散户流入', value: 674500000},
+                {name: '散户流出', value: 47450000},
+                {name: '主力流出', value: 176780000},
+                {name: '测试流出', value: 1767800}
+            ]
+        }
+        
+    });
+</script>

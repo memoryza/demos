@@ -64,8 +64,7 @@
 				})
 				.on('touchmove', 'body', function(e) {
 					if($(window).scrollTop() <= 5) {
-						console.log( e.touches[0].pageY -startY)
-						if(!isLocked && startY != CONST.INITPOS && e.touches[0].pageY - startY > 400) {
+						if(!isLocked && startY != CONST.INITPOS && e.touches[0].pageY - startY > 300) {
 							isLocked = true;
 							$('#container').show();
 							setTimeout(function() {
@@ -77,6 +76,21 @@
 					} else {
 						CONST.INITPOS = CONST.INITPOS
 					}
+				});
+				var lastBeta = undefined;
+				var timer = {};
+				window.addEventListener('deviceorientation', function(e) {
+					if(lastBeta === undefined) {
+						lastBeta = e.gamma;
+					}
+					if(lastBeta != e.gamma && Math.abs(lastBeta - e.gamma) > 5) {
+						clearTimeout(timer.moveTimer);
+						timer.moveTimer = setTimeout(function() {
+							$('#res').show().prepend('骚年你动了，上次:' + lastBeta + '本次:' + e.gamma);
+							lastBeta = e.gamma
+						}, 300);
+					}
+					
 				})
 			})
 		</script>
